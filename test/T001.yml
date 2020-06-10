@@ -1,0 +1,7 @@
+---
+name: T001
+description: This is activity for test
+platforms:
+  - windows
+executor: cmd
+command: dir
