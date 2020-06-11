@@ -13,7 +13,14 @@ module Alatir
       @activity_names.each do |name|
         activity_config = FileLoader.new(name, @activity_path).run
         activity = Activity.new(activity_config)
-        @results << LocalConnector.new(activity).run
+
+        #@results << LocalConnector.new(activity).run
+        @results << WinrmConnector.new(
+          activity,
+          endpoint: 'http://localhost:5985/wsman',
+          user: 'test_user',
+          password: 'Pass@word1'
+        ).run
       end
       print_results
     end

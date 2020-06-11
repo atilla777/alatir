@@ -15,5 +15,12 @@ module Alatir
         "#{self.class} don`t know executor '#{executor}'"
       )
     end
+
+    def wrong_executor_for_connector(executor, platform)
+      raise(
+        NotImplementedError,
+        "#{self.class} wrong executor (#{executor}) for platform (#{platform})"
+      )
+    end
   end
 end

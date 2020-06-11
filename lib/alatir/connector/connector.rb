@@ -2,7 +2,7 @@ module Alatir
   class Connector
     attr_reader :activity
 
-    def initialize(activity)
+    def initialize(activity, options = {})
       @activity = activity
     end
 
