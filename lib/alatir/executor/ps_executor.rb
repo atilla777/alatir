@@ -3,7 +3,7 @@ module Alatir
     private
 
     def command_in_executor
-      "powershell.exe iex #{activity.command}"
+      "powershell.exe iex '#{activity.command}'"
     end
   end
 end
