@@ -1,5 +1,5 @@
 ---
-name: T001
+name: Cmd activity
 description: This is activity for test
 platforms:
   - windows

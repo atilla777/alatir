@@ -1,0 +1,8 @@
+---
+name: Find passwd file on host
+tactic: T001
+description: This is activity for test
+platforms:
+  - linux
+executor: sh
+command: ls /etc/passwd

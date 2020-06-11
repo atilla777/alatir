@@ -13,7 +13,9 @@ module Alatir
       when :cmd
         CmdExecutor.new(activity, connector)
       when :powershell
-        PowershellExecutor.new(activity, connector)
+        PSExecutor.new(activity, connector)
+      when :sh
+        ShExecutor.new(activity, connector)
       else
         Errors.unknown_executor(activity.executor)
       end

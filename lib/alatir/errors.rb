@@ -1,5 +1,7 @@
 module Alatir
   module Errors
+    module_function
+
     def not_implemented
       raise(
         NotImplementedError,

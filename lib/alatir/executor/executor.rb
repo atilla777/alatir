@@ -1,11 +1,11 @@
 module Alatir
   class Executor
-    attr_reader :connector
     attr_reader :activity
+    attr_reader :connector
 
-    def initialize(connector, activity)
-      @connector = connector
+    def initialize(activity, connector)
       @activity = activity
+      @connector = connector
     end
 
     def run

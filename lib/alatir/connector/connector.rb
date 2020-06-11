@@ -10,7 +10,7 @@ module Alatir
       if platform_ok?
         executor.run
       else
-        Result.new(platform_check: false)
+        Result.new(activity: activity, platform_check: false)
       end
     end
 
@@ -25,7 +25,7 @@ module Alatir
     end
 
     def executor
-      ExecutorFabrica.new(activity, self)
+      ExecutorFabrica.new(activity, self).run
     end
 
     def run_command
