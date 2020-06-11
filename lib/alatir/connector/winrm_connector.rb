@@ -1,13 +1,8 @@
 require 'winrm'
 
 module Alatir
-  attr_reader :options
-
   class WinrmConnector < Connector
-    def initialize(activity, options = {})
-      super
-      @options = options
-    end
+    attr_reader :options
 
     def run_command(command_in_executor)
       if dependency_ok?

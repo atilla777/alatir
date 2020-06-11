@@ -4,6 +4,7 @@ module Alatir
 
     def initialize(activity, options = {})
       @activity = activity
+      @options = options
     end
 
     def run
