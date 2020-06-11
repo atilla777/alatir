@@ -13,7 +13,7 @@ module Alatir
       when :cmd
         CmdExecutor.new(activity, connector)
       when :powershell
-        PSExecutor.new(activity, connector)
+        PsExecutor.new(activity, connector)
       when :sh
         ShExecutor.new(activity, connector)
       else
