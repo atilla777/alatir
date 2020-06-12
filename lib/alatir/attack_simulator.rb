@@ -1,9 +1,10 @@
 module Alatir
   class AttackSimulation
     attr_reader :results
+    attr_reader :options
 
     def initialize
-      options = cast_options
+      @options = cast_options
       @activity_names = options.fetch(:names, [])
       @activity_path = options.fetch(:path, nil)
       @results = []
@@ -13,24 +14,35 @@ module Alatir
       @activity_names.each do |name|
         activity_config = FileLoader.new(name, @activity_path).run
         activity = Activity.new(activity_config)
-
-        #@results << LocalConnector.new(activity).run
-        @results << WinrmConnector.new(
-          activity,
-          endpoint: 'http://localhost:5985/wsman',
-          user: 'test_user',
-          password: 'Pass@word1'
-        ).run
+        send options.fetch(:connector, :localhost).to_sym, activity
       end
       print_results
     end
 
     private
 
+    def winrm(activity)
+      @results << WinrmConnector.new(
+        activity,
+        endpoint: 'http://localhost:5985/wsman',
+        user: 'test_user',
+        password: 'Pass@word1'
+      ).run
+    end
+
+    def ssh(activity)
+
+    end
+
+    def localhost(activity)
+      @results << LocalConnector.new(activity).run
+    end
+
     def cast_options
       option_parser = OptionParser.new do |opts|
         opts.on '-p', '--path=PATH', String, 'Path to activities folder (-p ./activities)'
         opts.on '-n', '--names=NAMES', Array, 'List of activities names (-n activity1, activityN)'
+        opts.on '-c', '--connector=CONNECTOR', 'Connector name (-c ssh)'
       end
       options = {}
       option_parser.parse!(into: options) # place ARGV to 'options' hash

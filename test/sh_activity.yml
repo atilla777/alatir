@@ -4,5 +4,6 @@ tactic: T001
 description: This is activity for test
 platforms:
   - linux
+  - macos
 executor: sh
 command: ls /etc/passwd
