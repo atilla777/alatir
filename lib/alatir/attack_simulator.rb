@@ -31,7 +31,12 @@ module Alatir
     end
 
     def ssh(activity)
-
+      @results << SshConnector.new(
+        activity,
+        endpoint: '192.168.1.71',
+        user: 'test_user',
+        password: 'Passw@rd1'
+      ).run
     end
 
     def localhost(activity)
@@ -95,7 +100,7 @@ module Alatir
     def print_process_succes(result)
       return if result.success || result.success.nil?
       Colors.color_puts(
-        "Process fineshed succes: #{result.success}",
+        "Process finished succes: #{result.success}",
         :red
       )
     end
