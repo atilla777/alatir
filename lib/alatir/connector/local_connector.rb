@@ -30,14 +30,8 @@ module Alatir
     end
 
     def current_platform
-      case RbConfig::CONFIG['host_os']
-      when /mswin|msys|mingw|cygwin|bccwin|wince|emc/
-        'windows'
-      when /darwin|mac os/
-        'macos'
-      when /linux|solaris|bsd/
-        'linux'
-      end
+      string = RbConfig::CONFIG['host_os']
+      find_platform_in_string(string)
     end
   end
 end

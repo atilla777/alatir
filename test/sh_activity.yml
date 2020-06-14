@@ -6,4 +6,4 @@ platforms:
   - linux
   - macos
 executor: sh
-command: ls /etc/passwd
+command: uname -a

@@ -14,40 +14,22 @@ module Alatir
       @activity_names.each do |name|
         activity_config = FileLoader.new(name, @activity_path).run
         activity = Activity.new(activity_config)
-        send options.fetch(:connector, :localhost).to_sym, activity
+        connector = ConnectorFabrica.new(activity, options).run
+        @results << connector.run
       end
       print_results
     end
 
     private
 
-    def winrm(activity)
-      @results << WinrmConnector.new(
-        activity,
-        endpoint: 'http://localhost:5985/wsman',
-        user: 'test_user',
-        password: 'Pass@word1'
-      ).run
-    end
-
-    def ssh(activity)
-      @results << SshConnector.new(
-        activity,
-        endpoint: '192.168.1.71',
-        user: 'test_user',
-        password: 'Passw@rd1'
-      ).run
-    end
-
-    def localhost(activity)
-      @results << LocalConnector.new(activity).run
-    end
-
     def cast_options
       option_parser = OptionParser.new do |opts|
         opts.on '-p', '--path=PATH', String, 'Path to activities folder (-p ./activities)'
         opts.on '-n', '--names=NAMES', Array, 'List of activities names (-n activity1, activityN)'
         opts.on '-c', '--connector=CONNECTOR', 'Connector name (-c ssh)'
+        opts.on '-h', '--host=HOST', 'Host for connector (-h 192.168.1.1)'
+        opts.on '-u', '--user=USER', 'User for connector (-u test_user)'
+        opts.on '-s', '--secret=SECRET', 'Password for connector user (-s Passw@rd1)'
       end
       options = {}
       option_parser.parse!(into: options) # place ARGV to 'options' hash

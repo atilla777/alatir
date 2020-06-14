@@ -5,24 +5,15 @@ module Alatir
     attr_reader :options
 
     def run_command(command_in_executor)
-      if dependency_ok?
-        connection = WinRM::Connection.new(options)
-        connection.shell(get_shell) do |shell|
-          output = shell.run(command_in_executor) # do |stdout, stderr|
-#            std_out = stdout
-#            std_err = stderr
-          #end
-          @result = Result.new(
-            activity: activity,
-            errors: output.stderr.chomp,
-            result: output.stdout.chomp,
-            success: output.exitcode == 1
-          )
-        end
-      else
+      return dependency_not_ok_result unless dependency_ok?
+      connection = WinRM::Connection.new(options)
+      connection.shell(get_shell) do |shell|
+        output = shell.run(command_in_executor)
         @result = Result.new(
           activity: activity,
-          dependency_chehck: false
+          errors: output.stderr.chomp,
+          result: output.stdout.chomp,
+          success: output.exitcode == 1
         )
       end
       @result
