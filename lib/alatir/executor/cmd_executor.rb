@@ -2,8 +2,8 @@ module Alatir
   class CmdExecutor < Executor
     private
 
-    def command_in_executor
-      "cmd.exe /c #{activity.command}"
+    def prepare_command
+      @prepared_command = "cmd.exe /c #{activity.command}"
     end
   end
 end

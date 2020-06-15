@@ -8,29 +8,33 @@ module Alatir
     end
 
     def run
-      return executor.run if platform_ok?
-      Result.new(activity: activity, platform_check: false)
+      return activity.result.merge!(platform_check: false) unless platform_ok?
+      result = executor.run
+      activity.result.merge!(result)
+    rescue StandardError => e
+      connector_error_result(e)
     end
 
     private
+
+    def platform_ok?
+      Errors.not_implemented
+    end
 
     def dependency_ok?
       Errors.not_implemented
     end
 
     def dependency_not_ok_result
-        @result = Result.new(
-          activity: activity,
-          dependency_chehck: false
-        )
+      activity.result.merge!(dependency_chehck: false)
     end
 
-    def platform_ok?
-      Errors.not_implemented
+    def connector_error_result(e)
+      activity.result.merge!(error: e)
     end
 
     def executor
-      ExecutorFabrica.new(activity, self).run
+      ExecutorFabrica.make(activity, self)
     end
 
     def run_command

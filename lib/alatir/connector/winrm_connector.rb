@@ -4,17 +4,16 @@ module Alatir
   class WinrmConnector < Connector
     attr_reader :options
 
-    def run_command(command_in_executor)
+    def run_command(executor)
       return dependency_not_ok_result unless dependency_ok?
-      connection = WinRM::Connection.new(options)
+      connection = WinRM::Connection.new(options.merge(no_ssl_peer_verification: true))
       connection.shell(get_shell) do |shell|
-        output = shell.run(command_in_executor)
-        @result = Result.new(
-          activity: activity,
-          errors: output.stderr.chomp,
-          result: output.stdout.chomp,
-          success: output.exitcode == 1
-        )
+        output = shell.run(executor.prepared_command)
+        @result = {
+          std_error: output.stderr.chomp,
+          std_out: output.stdout.chomp,
+          exit_code: output.exitcode == 1
+        }
       end
       @result
     end

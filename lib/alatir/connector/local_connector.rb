@@ -2,20 +2,18 @@ require 'open3'
 
 module Alatir
   class LocalConnector < Connector
-    def run_command(command_in_executor)
+    def run_command(executor)
       if dependency_ok?
-        std_out, std_error, process_status = Open3.capture3(command_in_executor)
-        Result.new(
-          activity: activity,
-          errors: std_error.chomp,
-          result: std_out.chomp,
+        std_out, std_error, process_status = Open3.capture3(
+          executor.prepared_command
+        )
+        {
+          std_error: std_error.chomp,
+          std_out: std_out.chomp,
           success: process_status.success?
-        )
+        }
       else
-        Result.new(
-          activity: activity,
-          dependency_chehck: false
-        )
+        {dependency_chehck: false}
       end
     end
 

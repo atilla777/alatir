@@ -7,21 +7,22 @@ module Alatir
       @options = cast_options
       @activity_names = options.fetch(:names, [])
       @activity_path = options.fetch(:path, nil)
-      @results = []
+      #@results = []
+      @activities = []
     end
 
     def run
       @activity_names.each do |name|
         activity_config = FileLoader.new(name, @activity_path).run
         activity = Activity.new(activity_config)
-        connector = ConnectorFabrica.new(activity, options).run
-        @results << connector.run
+        @activities << activity
+        ConnectorFabrica.make(activity, options).run
       end
       print_results
     end
 
     private
-
+    # alatir -p ./test -n sh_activity -c ssh -h localhost -u user -s password
     def cast_options
       option_parser = OptionParser.new do |opts|
         opts.on '-p', '--path=PATH', String, 'Path to activities folder (-p ./activities)'
@@ -37,52 +38,61 @@ module Alatir
     end
 
     def print_results
-      @results.each_with_index do |result, index|
+      #@results.each_with_index do |result, index|
+      @activities.each_with_index do |activity, index|
         puts '*******************************'
-        tactic = "(#{result.activity.tactic})" if result.activity.tactic
-        puts "#{index + 1}. #{result.activity.name} #{tactic}"
-        Colors.color_puts result.activity.command, :brown
-        if result.result && result.result != ''
+        tactic = "(#{activity.tactic})" if activity.tactic
+        puts "#{index + 1}. #{activity.name} #{tactic}"
+        Colors.color_puts activity.command, :brown
+        if activity.result[:std_out] && activity.result.fetch(:std_out, '') != ''
           puts '-------------------------------'
-          Colors.color_puts result.result, :green
+          Colors.color_puts activity.result.fetch(:std_out, ''), :green
         end
         puts '-------------------------------'
-        print_platform_check(result)
-        print_dependency_check(result)
-        print_errors(result)
-        print_process_succes(result)
+        print_platform_check(activity.result)
+        print_dependency_check(activity.result)
+        print_std_error(activity.result)
+        print_process_succes(activity.result)
+        print_error(activity.result)
       end
       Colors.color_puts '********Alatir finished********', :blue
     end
 
     def print_platform_check(result)
-      return if result.platform_check
+      return if result[:platform_check]
       Colors.color_puts(
-        "Platform check: #{result.platform_check}",
+        "Platform check: #{result[:platform_check]}",
         :red
       )
     end
 
     def print_dependency_check(result)
-      return if result.dependency_chehck
+      return if result[:dependency_check]
       Colors.color_puts(
-        "Dependency check: #{result.dependency_chehck}",
+        "Dependency check: #{result[:dependency_check]}",
         :red
       )
     end
 
-    def print_errors(result)
-      return if result.errors.nil? || result.errors.empty?
+    def print_std_error(result)
+      return if result[:std_error].nil? || result[:std_error].empty?
       Colors.color_puts(
-        "Errors: #{result.errors}",
+        "Errors: #{result[:std_error]}",
         :red
       )
     end
 
     def print_process_succes(result)
-      return if result.success || result.success.nil?
+      return if result[:success] || result[:success].nil?
       Colors.color_puts(
-        "Process finished succes: #{result.success}",
+        "Process finished succes: #{result[:success]}",
+        :red
+      )
+    end
+    def print_error(result)
+      return unless result[:error]
+      Colors.color_puts(
+        "Error: #{result[:error]}",
         :red
       )
     end

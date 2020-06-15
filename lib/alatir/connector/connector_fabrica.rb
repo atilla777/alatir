@@ -1,21 +1,16 @@
 module Alatir
   class ConnectorFabrica
-    attr_reader :activity
-    attr_reader :options
-
-    def initialize(activity, options)
-      @activity = activity
-      @options = options
+    def self.make(activity, options)
+      self.new.execute(activity, options)
     end
 
-    def run
-      send options.fetch(:connector, :localhost).to_sym, activity
+    def execute(activity, options)
+      send options.fetch(:connector, :localhost).to_sym, activity, options
     end
-
 
     private
 
-    def winrm(activity)
+    def winrm(activity, options)
       WinrmConnector.new(
         activity,
         endpoint: options[:host], # http://localhost:5985/wsman
@@ -24,7 +19,7 @@ module Alatir
       )
     end
 
-    def ssh(activity)
+    def ssh(activity, options)
       SshConnector.new(
         activity,
         endpoint: options[:host], # 192.168.1.1
@@ -33,7 +28,7 @@ module Alatir
       )
     end
 
-    def localhost(activity)
+    def localhost(activity, options)
       LocalConnector.new(activity)
     end
   end
