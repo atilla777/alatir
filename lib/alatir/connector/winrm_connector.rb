@@ -8,7 +8,7 @@ module Alatir
       return dependency_not_ok_result unless dependency_ok?
       connection = WinRM::Connection.new(options.merge(no_ssl_peer_verification: true))
       connection.shell(get_shell) do |shell|
-        output = shell.run(executor.prepared_command)
+        output = shell.run(executor.activity.command)
         @result = {
           std_error: output.stderr.chomp,
           std_out: output.stdout.chomp,

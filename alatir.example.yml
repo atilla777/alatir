@@ -1,0 +1,26 @@
+name: Test simulation
+description: Test simulation config description
+activities:
+  - target: localhost1
+    name: external_ip_detect
+  - target: localhost1
+    name: bad_dns_request
+  - target: winrm1
+    name: bad_url_request
+  - target: ssh1
+    name: mimikatz_download
+  - target: ssh2
+    name:
+targets:
+  localhost1:
+    connector: localhost
+  winrm1:
+    connector: winrm
+    host:
+    user:
+    password:
+  ssh1:
+    connector: ssh
+    host:
+    user:
+    password:

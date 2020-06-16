@@ -9,7 +9,8 @@ module Alatir
 
     def run
       return activity.result.merge!(platform_check: false) unless platform_ok?
-      result = executor.run
+      #result = executor.run
+      result = run_command(executor)
       activity.result.merge!(result)
     rescue StandardError => e
       connector_error_result(e)

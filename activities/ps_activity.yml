@@ -1,0 +1,9 @@
+---
+name: Powershell activity
+description: This is activity for test
+platforms:
+  - windows
+executor: powershell
+command: |
+  Invoke-WebRequest -UseBasicParsing -Method Head http://scanme.nmap.org;
+  Resolve-DnsName scanme.nmap.org

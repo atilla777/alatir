@@ -1,5 +1,6 @@
 #!/usr/bin/env ruby
 
 require "alatir"
+require 'alatir/cli/cli'
 
-Alatir::AttackSimulation.new.run
+Alatir::Cli.new.run

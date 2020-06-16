@@ -10,15 +10,7 @@ module Alatir
       prepare_command
     end
 
-    def run
-      connector.run_command(self)
-    end
-
     private
-
-    def command_in_executor
-      Errors.not_implemented
-    end
 
     def prepare_command
       Errors.not_implemented

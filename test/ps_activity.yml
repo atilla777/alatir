@@ -1,7 +1,0 @@
----
-name: Powershell activity
-description: This is activity for test
-platforms:
-  - windows
-executor: powershell
-command: Invoke-WebRequest -Method Head -Uri http://scanme.nmap.org/

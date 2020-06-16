@@ -14,7 +14,7 @@ module Alatir
       @description = options['description']
       @platforms = options['platforms']
       @executor = options['executor']
-      @command = options['command']
+      @command = options['command'].chomp
       @result = {
         platform_check: true, # Is platform (OS) apropriate to run activity command?
         dependency_check: true, # Is platform (OS) contains all needed soft to run activity command?

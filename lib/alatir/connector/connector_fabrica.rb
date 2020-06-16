@@ -15,7 +15,7 @@ module Alatir
         activity,
         endpoint: options[:host], # http://localhost:5985/wsman
         user: options[:user],
-        password: options[:secret]
+        password: options[:password]
       )
     end
 
@@ -24,7 +24,7 @@ module Alatir
         activity,
         endpoint: options[:host], # 192.168.1.1
         user: options[:user],
-        password: options[:secret]
+        password: options[:password]
       )
     end
 

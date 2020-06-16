@@ -1,3 +1,4 @@
+# TODO: delete if not used
 module Alatir
   class Result
     attr_reader :activity

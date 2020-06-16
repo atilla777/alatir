@@ -1,41 +1,6 @@
 module Alatir
-  class AttackSimulation
-    attr_reader :results
-    attr_reader :options
-
-    def initialize
-      @options = cast_options
-      @activity_names = options.fetch(:names, [])
-      @activity_path = options.fetch(:path, nil)
-      #@results = []
-      @activities = []
-    end
-
-    def run
-      @activity_names.each do |name|
-        activity_config = FileLoader.new(name, @activity_path).run
-        activity = Activity.new(activity_config)
-        @activities << activity
-        ConnectorFabrica.make(activity, options).run
-      end
-      print_results
-    end
-
+  module Print
     private
-    # alatir -p ./test -n sh_activity -c ssh -h localhost -u user -s password
-    def cast_options
-      option_parser = OptionParser.new do |opts|
-        opts.on '-p', '--path=PATH', String, 'Path to activities folder (-p ./activities)'
-        opts.on '-n', '--names=NAMES', Array, 'List of activities names (-n activity1, activityN)'
-        opts.on '-c', '--connector=CONNECTOR', 'Connector name (-c ssh)'
-        opts.on '-h', '--host=HOST', 'Host for connector (-h 192.168.1.1)'
-        opts.on '-u', '--user=USER', 'User for connector (-u test_user)'
-        opts.on '-s', '--secret=SECRET', 'Password for connector user (-s Passw@rd1)'
-      end
-      options = {}
-      option_parser.parse!(into: options) # place ARGV to 'options' hash
-      options
-    end
 
     def print_results
       #@results.each_with_index do |result, index|
@@ -75,7 +40,7 @@ module Alatir
     end
 
     def print_std_error(result)
-      return if result[:std_error].nil? || result[:std_error].empty?
+      return if result[:std_error].nil? || result[:std_error].empty? || result[:std_error] == ' '
       Colors.color_puts(
         "Errors: #{result[:std_error]}",
         :red
