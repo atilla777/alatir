@@ -1,0 +1,9 @@
+---
+name: Host name detect
+tactic: T000
+description: This is activity for test
+platforms:
+  - linux
+  - macos
+executor: sh
+command: uname -a

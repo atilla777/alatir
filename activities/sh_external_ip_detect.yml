@@ -1,0 +1,9 @@
+---
+name: External IP detect
+tactic: T000
+description: This is activity for test
+platforms:
+  - linux
+  - macos
+executor: sh
+command: curl https://api.myip.com

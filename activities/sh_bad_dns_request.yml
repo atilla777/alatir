@@ -1,0 +1,9 @@
+---
+name: Bad DNS request
+tactic: T000
+description: This is activity for test
+platforms:
+  - linux
+  - macos
+executor: sh
+command: host scanme.nmap.org

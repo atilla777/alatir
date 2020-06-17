@@ -6,10 +6,10 @@ module Alatir
     attr_accessor :targets
 
     def initialize(options = {})
-      @name = options['name']
-      @description = options['description']
-      @activities = options['activities']
-      @targets = options['targets']
+      @name = options[:name]
+      @description = options[:description]
+      @activities = options[:activities]
+      @targets = options[:targets]
     end
   end
 end

@@ -1,0 +1,8 @@
+---
+name: Bad URL request
+tactic: T000
+description: This is activity for test
+platforms:
+  - windows
+executor: cmd
+command: curl -I http://scanme.nmap.org

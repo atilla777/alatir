@@ -1,3 +1,4 @@
+---
 name: Test simulation
 description: |
   Test simulation config description.
@@ -8,21 +9,21 @@ activities:
   - target: localhost1
     name: sh_bad_dns_request
   - target: winrm1
-    name: sh_mimikatz_download
-  - target: ssh1
+    name: ps_mimikatz_download
+  - target: winrm1
     name: cmd_bad_url_request
-  - target: ssh2
-    name:
+  - target: ssh1
+    name: sh_hostname_detect
 targets:
-  localhost1:
-    connector: localhost
-  winrm1:
-    connector: winrm
-    host: myhost1.local
-    user: alatir_user
-    password: Passw@rd1
-  ssh1:
-    connector: ssh
-    host: myhost2.local
-    user: alatir_user
-    password: Passw@rd1
+  - localhost1:
+      connector: localhost
+  - winrm1:
+      connector: winrm
+      host: myhost1.local
+      user: alatir_user
+      password: Passw@rd1
+  - ssh1:
+      connector: ssh
+      host: myhost2.local
+      user: alatir_user
+      password: Passw@rd1

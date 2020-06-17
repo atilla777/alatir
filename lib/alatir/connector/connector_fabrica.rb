@@ -5,6 +5,13 @@ module Alatir
     end
 
     def execute(activity, options)
+#      connector_name = if options[:connector]
+#                       elsif options['connector']
+#                         options['connector'].to_sym
+#                       else
+#                         :localhost
+#                       end
+#      send connector_name, activity, options
       send options.fetch(:connector, :localhost).to_sym, activity, options
     end
 
