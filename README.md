@@ -12,6 +12,7 @@ Please note that the interface and settings of the app may change in future rele
 * **alatir library** - collection of ruby classes, that can be used in some application to use activity and simulation
 * **alatir CLI** - command line utility
 * **alatir gem** - alatir library and alatir CLI packaged to one Ruby gem library
+
 Activities are mapped to MITRE ATT&CK® Matrix.
 You can use alatir for test your security by prepare attack scenario (write simulation config for CLI app) that represent actual fo your organization threat (APT group) and then run this simulation to check is your security soft, devices and personal detect/prevent attack.
 ### Instalation
