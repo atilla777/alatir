@@ -33,7 +33,7 @@ bundle exec exe/alatir -a ./activities -n ps_activity,cmd_activity -c winrm -h h
 bundle exec exe/alatir simulate -s ../simulation.yml
 ```
 
-### Alatir libryry
+### Alatir library
 Main classes:
 * Activity
 * Connector
