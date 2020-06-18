@@ -7,7 +7,7 @@ Please note that the interface and settings of the app may change in future rele
 ### Basic concept
 * **activity** - action that simulate one attack technique realisation, activity may be represented as set of config in one yaml file (activity is script, that run attack simulation commands)
 * **connector** - mechanism of transferring activity to target, can be represented as configuration in simulation yaml file or options in CLI app  (agentless local, SSH and WinRM connectors)
-* **libriry of activities** - collection of activities, library may be represented as set activity yaml files in some folder
+* **library of activities** - collection of activities, library may be represented as set activity yaml files in some folder
 * **simulation** - sequence of activities, each of them can use own connector, simulation may be represented as yaml file describes used activities and connectors
 * **alatir library** - collection of ruby classes, that can be used in some application to use activity and simulation
 * **alatir CLI** - command line utility
