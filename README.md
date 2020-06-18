@@ -12,11 +12,15 @@ Please note that the interface and settings of the app may change in future rele
 * **alatir library** - collection of ruby classes, that can be used in some application to use activity and simulation
 * **alatir CLI** - command line utility
 * **alatir gem** - alatir library and alatir CLI packaged to one Ruby gem library
-
+### Instalation
+```bash
+git clone https://github.com/atilla777/alatir.git
+```
 ### Alatir CLI
 By default activities library present in activities folder and simulation configuration is in simulation.yml file.
 Before usage CLI app you should configure one or more simulation file, and if you want to create (reconfigure) activities yaml files.
 #### Examples of usage
+All commands shoul be run in alatir folder
 ##### Run several activities
 ```bash
 bundle exec exe/alatir -a ./activities -n ps_activity,cmd_activity -c winrm -h https://192.168.1.1:5986/wsman -u test_user -p Passw@rd1
