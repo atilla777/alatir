@@ -5,7 +5,8 @@ module Alatir
     end
 
     def run
-      YAML::load_file(@activity_path)
+      yaml = YAML::load_file(@activity_path)
+      Tools.symbolize_keys(yaml)
     end
   end
 end

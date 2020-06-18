@@ -2,6 +2,7 @@ require 'open3'
 
 module Alatir
   class LocalConnector < Connector
+
     def run_command(executor)
       if dependency_ok?
         std_out, std_error, process_status = Open3.capture3(
@@ -18,6 +19,14 @@ module Alatir
     end
 
     private
+
+    def get_name
+      :local
+    end
+
+    def used_options
+      []
+    end
 
     def platform_ok?
       activity.platforms.include? current_platform

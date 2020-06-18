@@ -8,14 +8,18 @@ module Alatir
     attr_accessor :description
     attr_accessor :result
 
+    attr_accessor :connector
+    attr_accessor :time
+
     def initialize(options = {})
-      @name = options['name']
-      @tactic = options['tactic']
-      @description = options['description']
-      @platforms = options['platforms']
-      @executor = options['executor']
-      @command = options['command'].chomp
+      @name = options[:name]
+      @tactic = options[:tactic]
+      @description = options[:description]
+      @platforms = options[:platforms]
+      @executor = options[:executor]
+      @command = options[:command].chomp
       @result = {
+        timestamp: nil,
         platform_check: true, # Is platform (OS) apropriate to run activity command?
         dependency_check: true, # Is platform (OS) contains all needed soft to run activity command?
         error: nil, # Alatir error (connector ptoblem e.t.c.)

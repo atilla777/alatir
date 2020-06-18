@@ -6,7 +6,11 @@ module Alatir
 
     def run_command(executor)
       return dependency_not_ok_result unless dependency_ok?
-      connection = WinRM::Connection.new(options.merge(no_ssl_peer_verification: true))
+      options.merge!(
+        no_ssl_peer_verification: true,
+        endpoint: options[:host]
+      )
+      connection = WinRM::Connection.new(options)
       connection.shell(get_shell) do |shell|
         output = shell.run(executor.activity.command)
         @result = {
@@ -19,6 +23,18 @@ module Alatir
     end
 
     private
+
+    def get_name
+      :winrm
+    end
+
+    def used_options
+      %i[
+        host
+        user
+        password
+      ]
+    end
 
     def get_shell
       case activity.executor.to_sym

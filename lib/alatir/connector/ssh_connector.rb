@@ -18,12 +18,24 @@ module Alatir
 
     private
 
+    def get_name
+      :ssh
+    end
+
+    def used_options
+      %i[
+        host
+        user
+        password
+      ]
+    end
+
     def session
       if @session
         @session
       else
         @session = Net::SSH.start(
-          options[:endpoint],
+          options[:host],
           options[:user],
           password: options[:password],
           non_interactive: true

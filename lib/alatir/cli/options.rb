@@ -14,6 +14,7 @@ module Alatir
         opts.on '-h', '--host=HOST', 'Host for connector (-h 192.168.1.1)'
         opts.on '-u', '--user=USER', 'User for connector (-u test_user)'
         opts.on '-p', '--password=PASSWORD', 'Password for connector user (-p Passw@rd1)'
+        opts.on '-o', '--output=OUTPUT', 'Reuslt CSV file (-o result.csv)'
       end
       options = default_options
       option_parser.parse!(into: options) # place dashed (-o) ARGV to 'options' hash

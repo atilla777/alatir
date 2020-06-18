@@ -1,22 +1,39 @@
 module Alatir
   class Connector
     attr_reader :activity
+    attr_reader :options
+    attr_reader :name
+    attr_reader :connector
 
     def initialize(activity, options = {})
       @activity = activity
-      @options = options
+      @name = get_name
+      @activity.connector = self
+      @options = get_options(options)
     end
 
     def run
       return activity.result.merge!(platform_check: false) unless platform_ok?
-      #result = executor.run
       result = run_command(executor)
+      result[:timestamp] = Time.now
       activity.result.merge!(result)
     rescue StandardError => e
       connector_error_result(e)
     end
 
     private
+
+    def get_name
+      Errors.not_implemented
+    end
+
+    def get_options(opts)
+      opts.select { |opt_name, opt_value| used_options.include? opt_name }
+    end
+
+    def used_options
+      Errors.not_implemented
+    end
 
     def platform_ok?
       Errors.not_implemented
