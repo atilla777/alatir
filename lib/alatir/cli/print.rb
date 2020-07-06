@@ -9,12 +9,8 @@ module Alatir
         Colors.color_puts '*******************************', :blue
         tactic = "(#{activity.tactic})" if activity.tactic
         puts "#{index + 1}. #{activity.result[:timestamp]} - #{activity.name} #{tactic}"
-        Colors.color_puts activity.connector.name, :cyan
-        if activity.connector.options[:host]
-          Colors.color_puts(activity.connector.options[:host], :cyan)
-        end
-        Colors.color_puts activity.executor, :cyan
-        Colors.color_puts activity.command, :brown
+        Colors.color_puts "#{activity.connector.name} #{activity.connector.options[:host]} ", :cyan
+        Colors.color_puts "#{activity.executor}> #{activity.command}", :brown
         if activity.result[:std_out] && activity.result.fetch(:std_out, '') != ''
           Colors.color_puts '-------------------------------', :blue
           Colors.color_puts activity.result.fetch(:std_out, ''), :green

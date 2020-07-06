@@ -8,12 +8,12 @@ module Alatir
         .run
       @simulation = Simulation.new(simulation_config)
       @simulation.targets.each do |target|
-        execute_on_target target
+        run_activity_on target
       end
       print_results
     end
 
-    def execute_on_target(target)
+    def run_activity_on(target)
       # Group activities by target
       target_activities = @simulation.activities.select do |activity|
         activity[:target] == target[:name]
@@ -23,6 +23,5 @@ module Alatir
       files = activity_files(names, options[:activities_path])
       execute_activities(files, target)
     end
-
   end
 end
